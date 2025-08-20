@@ -1,6 +1,7 @@
 package br.edu.infnet.victorapi.modules.area.entity;
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @DiscriminatorValue("SPECIALIZED")
@@ -16,7 +17,7 @@ public class SpecializedArea extends Area {
     private Boolean requiresCertification = false;
 
     @Column(name = "budget_limit")
-    private Double budgetLimit;
+    private BigDecimal budgetLimit;
 
     public SpecializedArea() {
         super();
@@ -52,7 +53,7 @@ public class SpecializedArea extends Area {
     @Override
     public String getAuditInfo() {
         return String.format("SpecializedArea[id=%d, name='%s', code='%s', type='%s', priority=%d, " +
-                           "certification=%s, budget=%.2f, active=%s, created=%s, updated=%s]",
+                           "certification=%s, budget=%s, active=%s, created=%s, updated=%s]",
             getId(), getName(), getCode(), specializationType, priorityLevel, 
             requiresCertification, budgetLimit, getIsActive(), getCreatedAt(), getUpdatedAt());
     }
@@ -81,21 +82,21 @@ public class SpecializedArea extends Area {
         return requiresCertification || (priorityLevel != null && priorityLevel >= 4);
     }
 
-    public Double calculateOperationalCost() {
+    public BigDecimal calculateOperationalCost() {
         if (budgetLimit == null || priorityLevel == null) {
-            return 0.0;
+            return BigDecimal.ZERO;
         }
         
-        double multiplier = switch (priorityLevel) {
-            case 1 -> 0.5;
-            case 2 -> 0.7;
-            case 3 -> 1.0;
-            case 4 -> 1.3;
-            case 5 -> 1.5;
-            default -> 1.0;
+        BigDecimal multiplier = switch (priorityLevel) {
+            case 1 -> new BigDecimal("0.5");
+            case 2 -> new BigDecimal("0.7");
+            case 3 -> BigDecimal.ONE;
+            case 4 -> new BigDecimal("1.3");
+            case 5 -> new BigDecimal("1.5");
+            default -> BigDecimal.ONE;
         };
         
-        return budgetLimit * multiplier;
+        return budgetLimit.multiply(multiplier);
     }
 
     public String getSpecializationType() {
@@ -122,11 +123,11 @@ public class SpecializedArea extends Area {
         this.requiresCertification = requiresCertification;
     }
 
-    public Double getBudgetLimit() {
+    public BigDecimal getBudgetLimit() {
         return budgetLimit;
     }
 
-    public void setBudgetLimit(Double budgetLimit) {
+    public void setBudgetLimit(BigDecimal budgetLimit) {
         this.budgetLimit = budgetLimit;
     }
 }

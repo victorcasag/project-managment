@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class PolymorphismDemoController {
         SpecializedArea area2 = new SpecializedArea("Segurança", "SEC", 
             "Área de segurança crítica", "SECURITY", 5);
         area2.setRequiresCertification(true);
-        area2.setBudgetLimit(100000.0);
+        area2.setBudgetLimit(BigDecimal.valueOf(100000.0));
 
         List<Auditable> auditableEntities = Arrays.asList(area1, area2);
 
@@ -105,7 +106,7 @@ public class PolymorphismDemoController {
 
         SpecializedArea specialized = new SpecializedArea("Laboratório", "LAB", 
             "Laboratório de pesquisa", "RESEARCH", 4);
-        specialized.setBudgetLimit(50000.0);
+        specialized.setBudgetLimit(BigDecimal.valueOf(50000.0));
         specialized.setRequiresCertification(true);
 
         result.append("Objeto: SpecializedArea\n");
