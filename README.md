@@ -446,3 +446,16 @@ Parabéns! 🚀 Você agora tem o **Victor API** rodando localmente.
 ---
 
 *Desenvolvido com ❤️ usando Java 21, Spring Boot 3.5.4 e IntelliJ IDEA*
+
+---
+
+## 🏗️ Infraestrutura e Skeletons adicionados (para a atividade)
+
+Adicionei artefatos e skeletons para facilitar a implementação das features da disciplina:
+
+- `config-server/` — skeleton de Spring Cloud Config Server (porta 8888)
+- `discovery-server/` — skeleton de Eureka Discovery Server (porta 8761)
+- `docker-compose.yml` — atualizado para incluir RabbitMQ, Config Server, Discovery, Prometheus e Grafana
+- `monitoring/prometheus.yml` — configuração básica do Prometheus
+
+Estes são skeletons dentro do repositório: para utilizá-los construa e rode conforme as instruções da seção "Como Executar". Não execute comandos sem revisar os arquivos localmente.

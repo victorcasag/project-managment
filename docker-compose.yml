@@ -24,6 +24,52 @@ services:
       timeout: 10s
       retries: 3
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: victorapi_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - app_network
+
+  config-server:
+    build: ./config-server
+    container_name: victorapi_config_server
+    ports:
+      - "8888:8888"
+    networks:
+      - app_network
+
+  discovery-server:
+    build: ./discovery-server
+    container_name: victorapi_discovery
+    ports:
+      - "8761:8761"
+    networks:
+      - app_network
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: victorapi_prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    networks:
+      - app_network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: victorapi_grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - app_network
+
 volumes:
   postgres_data:
     driver: local

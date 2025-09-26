@@ -1,0 +1,18 @@
+server:
+  port: 8888
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/example/config-repo
+          default-label: main
+      bootstrap:
+        enabled: true
+
+spring:
+  profiles:
+    active: native
+
+# Note: This is a placeholder bootstrap for the config server. Replace git.uri with your real config repo.

@@ -1,0 +1,16 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: auth-service
+
+jwt:
+  secret: myAuthServiceSecretKey1234567890
+  expiration-ms: 3600000
+
+# Simple client credentials for service-to-service auth (development only)
+clients:
+  service-client:
+    id: service-client
+    secret: service-secret
